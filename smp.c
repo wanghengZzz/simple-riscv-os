@@ -1,0 +1,15 @@
+#include "smp.h"
+
+#include "uart.h"
+volatile uintptr_t _init_finish = 0;
+
+__attribute__((weak)) void minor_main(uintptr_t hartid, uintptr_t dtb) {
+  uart_printf("[smp] hart %u online, entering idle\n", hartid);
+  for (;;) {
+    __asm__ volatile("wfi");
+  }
+}
+
+void smp_wake_all_harts(void) {
+  for (uint32_t h = 1; h < MAX_HARTS; ++h) smp_send_ipi(h);
+}
