@@ -9,7 +9,6 @@ The system runs exclusively in **Machine Mode (M-mode)** and **User Mode (U-mode
 ## Features
 
 ### Multi-Core SMP Boot (`entry.S`, `smp.c`)
-- Supports up to 4 harts (hardware threads)
 - Hart 0 handles primary initialization: copies `.text` / `.rodata` / `.data` to RAM, clears BSS, and initializes UART
 - Other harts spin-wait on the `_init_finish` flag, then enter their respective `minor_main`
 - Each hart has an independent 32KB kernel stack
